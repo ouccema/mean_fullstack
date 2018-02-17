@@ -1,0 +1,26 @@
+<div class="container">
+
+  <div class="row">
+
+
+    <!-- /.col-lg-3 -->
+
+    <div class="col-lg-12" *ngFor="let todo of todos">
+
+      <div class="card mt-4">
+
+        <div class="card-body">
+          <h3 class="card-title">{{todo.title}}</h3>
+
+          <p class="card-text">{{todo.desc}}</p>
+
+      </div>
+
+
+    </div>
+    <!-- /.col-lg-9 -->
+
+  </div>
+
+</div>
+<!-- /.container -->
