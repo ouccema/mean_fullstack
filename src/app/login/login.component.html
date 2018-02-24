@@ -1,0 +1,31 @@
+<div class="basic-container">
+<div class="form-container">
+
+  <form [formGroup]="userForm" (ngSubmit)="onClickLogin(userForm)">
+    <mat-card>
+      <mat-card-header>
+          <h1 class="title">
+            Login
+          </h1>
+
+      </mat-card-header>
+      <div class="inputform">
+
+        <mat-input-container floatPlaceholder="auto">
+          <input matInput formControlName="email" type="text" required placeholder="email">
+        </mat-input-container>
+
+        <mat-input-container floatPlaceholder="auto">
+          <input matInput formControlName="pass" type="pass" required placeholder="password">
+        </mat-input-container>
+
+        <mat-error *ngIf="errMessage">{{errMessage}}</mat-error>
+        <div class="button-row">
+          <button mat-raised-button type="reset" routerLink="/register">Register</button>
+          <button mat-raised-button color="primary" [disabled]="!userForm.valid" type="submit">Login</button>
+        </div>
+      </div>
+    </mat-card>
+  </form>
+  </div>
+</div>

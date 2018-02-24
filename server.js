@@ -17,6 +17,9 @@ app.use(bodyparser.urlencoded({extended:true}));
 const api = require('./server/routing/api');
 app.use('/api',api);
 
+const auth = require('./server/routing/auth');
+app.use('/auth', auth);
+
 
 app.use(express.static(__dirname+"/dist"));
 

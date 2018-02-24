@@ -15,11 +15,15 @@ import { ContactComponent } from './contact/contact.component';
 import { ApiService } from './api.service';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from './material.module';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+
 
 
 const appRoutes: Routes = [
   { path: 'todos', component: HomeComponent },
   { path: 'contact',      component: ContactComponent },
+
 
 ];
 
@@ -30,6 +34,8 @@ const appRoutes: Routes = [
     HomeComponent,
     MenuComponent,
     ContactComponent,
+    LoginComponent,
+    RegisterComponent,
 
   ],
 
@@ -43,7 +49,8 @@ const appRoutes: Routes = [
     MatCheckboxModule,
     NoopAnimationsModule,
     MatFormFieldModule,
-    MaterialModule
+    MaterialModule,
+
 
   ],
   providers: [ApiService],

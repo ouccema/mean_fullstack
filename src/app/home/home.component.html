@@ -1,86 +1,56 @@
+<app-menu></app-menu>
 <div class="container">
 
 
 
-  <form [formGroup]="todoForm" (ngSubmit)="todoFormSubmit(todoForm.value)">
-    <div class="row">
-  <div class="col-md-3">
-    <label>Title:</label>
-<input type="text" formControlName="title" class="form-control" placeholder="Todos title">
-  </div>
-<div class="col-md-3">
-  <label>Description:</label>
-<input type="text" ng-value="false" class="form-control" formControlName="desc" placeholder="Todos description">
+<form [formGroup]="todoForm" (ngSubmit)="todoFormSubmit(todoForm.value)" >
+<div >
+  <mat-form-field>
+    <input formControlName="title" matInput placeholder="Title">
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea formControlName="desc" matInput placeholder="Description"></textarea>
+  </mat-form-field>
 
 
-</div>
-
-<div class="col-md-3">
-  <div class='row'>
-<div class="col-md-6">
-  <label>Status:</label>
-<input type="checkbox"  formControlName="status" class="form-control">
+  <button mat-raised-button type="submit" mat-button>Add Todo</button>
 
 
-</div>
-
-</div>
-
-</div>
-</div>
-
-<br>
-
-
-<div class="col-md-6">
-  <input class="btn btn-success" type="submit" value="Add">
 </div>
 
 
 </form>
 
-<div class="example-container">
-  <mat-form-field>
-    <input matInput placeholder="Title">
-  </mat-form-field>
-
-  <mat-form-field>
-    <textarea matInput placeholder="Description"></textarea>
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-checkbox>Status</mat-checkbox>
-
-  </mat-form-field>
-</div>
-
-
-
-
-<h3>Todos List:</h3>
-
-
-    <!-- /.col-lg-3 -->
-
-    <div class="col-lg-12" *ngFor="let todo of todos">
-
-      <div class="card mt-4">
-
-        <div class="card-body">
-          <h3 class="card-title">{{todo.title}}</h3>
-
-          <p class="card-text">{{todo.desc}}</p>
-
-<p class="card-text">{{todo.status}}</p>
-
-
-      </div>
-
-
-    </div>
-    <!-- /.col-lg-9 -->
-
+<div class="example-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
   </div>
+
+<mat-table #table [dataSource]="dataSource">
+
+  <ng-container matColumnDef="title">
+    <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+    <mat-cell *matCellDef="let todo"> {{todo.title}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="description">
+    <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+    <mat-cell *matCellDef="let todo"> {{todo.desc}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+    <mat-cell *matCellDef="let todo"> {{todo.status}} </mat-cell>
+  </ng-container>
+
+
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
 
 </div>
 <!-- /.container -->

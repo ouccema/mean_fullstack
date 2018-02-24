@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from '../api.service';
+import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatButtonModule, MatCheckboxModule } from '@angular/material';
+import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 
 
@@ -11,6 +13,8 @@ import { MatButtonModule, MatCheckboxModule } from '@angular/material';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
+
+
 
 export class HomeComponent implements OnInit {
 
@@ -27,12 +31,28 @@ export class HomeComponent implements OnInit {
   });
 
   todos;
+  dataSource;
+  displayedColumns = ['title' , 'description', 'status'];
 
   ngOnInit() {
 
 
-    this.apiService.getTodos().subscribe(res => { this.todos = res.data; });
+    this.apiService.getTodos().subscribe(res => {
+      // this.todos = res.data;
+      this.dataSource = new MatTableDataSource(res.data);
 
+     });
+
+
+  }
+
+
+  applyFilter(filterValue: string) {
+
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+    console.log(this.dataSource);
   }
 
   todoFormSubmit(todoForm) {
@@ -40,8 +60,10 @@ export class HomeComponent implements OnInit {
     // Form Validation //
     if (this.todoForm.valid) {
       console.log(todoForm);
+      alert(this.todos);
 
-      alert(this);
+
+      this.apiService.addTodo(todoForm).subscribe(res => { this.ngOnInit(); });
     }
 
 

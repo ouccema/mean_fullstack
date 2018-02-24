@@ -1,0 +1,40 @@
+<div class="basic-container">
+
+
+  <div class="form-container">
+  <form [formGroup]="registerForm"  (ngSubmit)="onClickRegister(registerForm)">
+    <mat-card>
+      <mat-card-header>
+        <h1 class="title">
+          Register
+        </h1>
+
+      </mat-card-header>
+      <div class="inputform">
+
+        <mat-input-container floatPlaceholder="auto">
+          <input matInput formControlName="firstname" type="text" required placeholder="Name">
+        </mat-input-container>
+
+        <mat-input-container floatPlaceholder="auto">
+          <input matInput formControlName="lastname" type="text" required placeholder="Last name">
+        </mat-input-container>
+
+        <mat-input-container floatPlaceholder="auto">
+          <input matInput formControlName="email" type="text" required placeholder="Email">
+        </mat-input-container>
+
+        <mat-input-container floatPlaceholder="auto">
+          <input matInput formControlName="password" type="password" required placeholder="Password">
+        </mat-input-container>
+
+        <mat-error *ngIf="errMessage">{{errMessage}}</mat-error>
+        <div class="button-row">
+          <button mat-raised-button type="reset" routerLink="/login">You are already have an account</button>
+          <button mat-raised-button color="primary" [disabled]="!registerForm.valid" type="submit">register</button>
+        </div>
+      </div>
+    </mat-card>
+  </form>
+  </div>
+</div>
