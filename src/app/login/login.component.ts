@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ApiService } from '../api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,12 +10,12 @@ import { ApiService } from '../api.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private apiService: ApiService) { }
-  errMessage;
+  constructor(private apiService: ApiService , private router: Router) { }
+  errMessage ;
   userForm = new FormGroup({
 
     email: new FormControl('', Validators.email),
-    pass: new FormControl('', Validators.minLength(5)),
+    password: new FormControl('', Validators.minLength(5)),
 
   });
 
@@ -22,11 +23,25 @@ export class LoginComponent implements OnInit {
 
   onClickLogin(form: FormGroup) {
 
-
-
     if (form.valid) {
+      //console.log(form.value);
+      this.apiService.login(form.value).subscribe(res => {
 
-      console.log(form.value);
+        console.log(res);
+
+        // if (res.status === 401) {
+        //   this.errMessage = res.message;
+        //   console.log('Loggin Error');
+        // } else {
+
+        //   localStorage.setItem('token', res.data.token);
+        //   this.router.navigateByUrl('/');
+
+        // }
+
+
+
+      });
     }
 
 

@@ -2,6 +2,7 @@ const router = require('express').Router();
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 const EjsRender = require('ejs');
+var jwt = require('jsonwebtoken');
 
 
 const connection = (closure) => {
@@ -19,7 +20,8 @@ const connection = (closure) => {
 const sendError = (err, res, code) => {
 
   response.status = code;
-  response.messsage = typeof err == 'object' ? err.message : err;
+  response.message = typeof err == 'object' ? err.message : err;
+  response.data='';
   res.status(code).json(response);
 
 }
@@ -37,12 +39,43 @@ router.post('/register',(req,res)=>{
   connection(db => {
     db.collection('users').insert(req.body).then(result => {
 
-      response.mesage = 'OK';
+      response.message = 'OK';
       response.data = result;
       res.json(response);
 
     }).catch(err => {
-      sendError(err, res, 501)
+      sendError(err, res, 409)
+
+    })
+
+  })
+
+})
+
+router.post('/login',(req,res)=>{
+
+  connection(db => {
+    db.collection('users').findOne({email:req.body.email}).then(result => {
+console.log(req.body);
+        if(!result) sendError ('User not found',res,401);
+
+      if (result.password == req.body.password) {
+
+        let token = jwt.sign({id:result._id}, 'secret');
+
+       response.data ={token:token};
+       response.status=200;
+       response.message='Logged In';
+        res.json(response);
+      }
+
+      else {
+        sendError('Login Invalid',res,401);
+
+      }
+
+    }).catch(err => {
+      sendError(err, res, 500)
 
     })
 

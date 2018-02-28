@@ -36,7 +36,7 @@ router.get('/:id/todos',(req,res)=>{
     let query = {_id:ObjectID(req.params.id)};
 
     connection(db=>{
-db.collection('pool').findOne(query).then(result=>{
+db.collection('users').findOne(query).then(result=>{
 
     response.data = result.todos;
     response.mesage='OK';
@@ -58,7 +58,7 @@ router.get('/:id/todos/:iTodo',(req,res)=>{
     let query = {_id:ObjectID(req.params.id)};
 
     connection(db=>{
-db.collection('pool').findOne(query).then(result=>{
+db.collection('users').findOne(query).then(result=>{
 
     response.data = result.todos[req.params.iTodo];
     response.mesage='OK';
@@ -97,26 +97,6 @@ router.post('/:id/todos', (req, res) => {
 })
 
 
-router.post('/add', (req, res) => {
-
-
-
-  connection(db => {
-    db.collection('pool').insert(req.body).then(result => {
-
-
-      response.mesage = 'OK';
-      res.json(response);
-
-    }).catch(err => {
-      sendError(err, res, 501)
-
-    })
-
-  })
-
-
-})
 
 module.exports = router;
 

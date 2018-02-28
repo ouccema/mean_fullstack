@@ -38,8 +38,10 @@ export class HomeComponent implements OnInit {
 
 
     this.apiService.getTodos().subscribe(res => {
-      // this.todos = res.data;
+      console.log(this.todos);
+
       this.dataSource = new MatTableDataSource(res.data);
+
 
      });
 
@@ -60,7 +62,6 @@ export class HomeComponent implements OnInit {
     // Form Validation //
     if (this.todoForm.valid) {
       console.log(todoForm);
-      alert(this.todos);
 
 
       this.apiService.addTodo(todoForm).subscribe(res => { this.ngOnInit(); });
